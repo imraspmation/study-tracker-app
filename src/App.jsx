@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 
-import RecordForm from './RecordForm'
+import RecordForm from './components/RecordForm'
 
 function App() {
 
