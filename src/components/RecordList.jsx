@@ -5,10 +5,13 @@ export default function RecordList({records}) {
 	<>
 	    <h1>学習記録一覧</h1>
 	    <ul>
-		{for (record of records){
-		    <RecordItem record={record} />
-		}}
+		{records.map((record) => (
+		    <RecordItem key={record.id} record={record} />
+		))}
 	    </ul>
 	</>
     )
 }
+		// {for (record of records){
+		//     <RecordItem record={record} />
+		// }}

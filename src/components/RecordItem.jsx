@@ -1,7 +1,11 @@
 export default function RecordItem({record}){
     return (
-	<>
-	    <p>item</p>
-	</>
+	<li>
+	    <h3>{record.questionTitle}</h3>
+	    <p>日付: {record.studyDate}</p>
+	    <p>difficulty: {record.difficulty}</p>
+	    <p>タグ: {record.tags.length > 0 ? record.tags.join(", ") : "なし"}</p>
+	    <p>メモ: {record.memo || "なし"}</p>
+	</li>
     )
 }
