@@ -7,10 +7,13 @@ export default function Home() {
     const addRecords = (newRecord) => {
 	setRecords([...records, newRecord]);
     };
+    const deleteRecords = (id) => {
+	setRecords(records.filter((record) => record.id !== id));
+    }
     return (
 	<>
 	    <RecordForm onAddRecord={addRecords}/>
-	    <RecordList records={records}/>
+	    <RecordList records={records} onDeleteRecord={deleteRecords}/>
 	</>
     )
 }
