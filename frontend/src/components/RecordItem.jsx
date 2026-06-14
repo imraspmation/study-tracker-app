@@ -6,7 +6,7 @@ export default function RecordItem({record, onDeleteRecord}){
 	    <p>difficulty: {record.difficulty}</p>
 	    <p>タグ: {record.tags.length > 0 ? record.tags.join(", ") : "なし"}</p>
 	    <p>メモ: {record.memo || "なし"}</p>
-	    <button onClick={() => onDeleteRecord(record.id)}>削除する</button>
+	    <button type="button" onClick={() => onDeleteRecord(record.id)}>削除する</button>
 	</li>
     )
 }
