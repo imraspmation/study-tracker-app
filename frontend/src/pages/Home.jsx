@@ -7,9 +7,9 @@ export default function Home() {
     useEffect(() => {
 	const fetchRecords = async () => {
 	    const res = await fetch("http://localhost:5000/records");
-	    console.log(res);
+	    console.log(`res:${res}`);
 	    const data = await res.json();
-	    console.log(data);
+	    console.log(`data:${data}`);
 	    setRecords(data)
 	};
 	fetchRecords();
@@ -25,7 +25,10 @@ export default function Home() {
 	const savedRecord = await res.json();
 	setRecords([...records, savedRecord]);
     };
-    const deleteRecords = (id) => {
+    const deleteRecords = async (id) => {
+	await fetch(`http://localhost:5000/records/${id}`,{
+	    method: "DELETE",
+	});
 	setRecords(records.filter((record) => record.id !== id));
     }
     return (
