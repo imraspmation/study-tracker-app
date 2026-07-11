@@ -15,21 +15,29 @@ export default function Home() {
 	fetchRecords();
     },[]);
     const addRecords = async (newRecord) => {
-	const res = await fetch("http://localhost:5000/records", {
-	    method: "POST",
-	    headers: {
-		"Content-Type":"application/json",
-	    },
-	    body: JSON.stringify(newRecord),
-	});
-	const savedRecord = await res.json();
-	setRecords([...records, savedRecord]);
+	try{
+	    const res = await fetch("http://localhost:5000/records", {
+		method: "POST",
+		headers: {
+		    "Content-Type":"application/json",
+		},
+		body: JSON.stringify(newRecord),
+	    });
+	    const savedRecord = await res.json();
+	    if (!res.ok) {
+		console.error("作成に失敗", savedRecord);
+		return;
+	    }
+	    setRecords([...records, savedRecord]);
+	} catch (err) {
+	    console.log("通信エラー:", err)
+	}
     };
     const deleteRecords = async (id) => {
 	await fetch(`http://localhost:5000/records/${id}`,{
 	    method: "DELETE",
 	});
-	setRecords(records.filter((record) => record.id !== id));
+	setRecords(records.filter((record) => record._id !== id));
     }
     return (
 	<>

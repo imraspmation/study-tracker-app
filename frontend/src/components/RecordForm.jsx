@@ -34,8 +34,6 @@ export default function RecordForm({onAddRecord}) {
     const handleSubmit = (e) => {
 	e.preventDefault();
 	const newRecord = {
-	    // FIXME: use UUID
-	    id: Date.now(),
 	    ...formData,
 	}
 	console.log(newRecord)

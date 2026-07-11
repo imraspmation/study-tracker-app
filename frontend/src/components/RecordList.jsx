@@ -8,7 +8,7 @@ export default function RecordList({records,onDeleteRecord}) {
 	     <p>まだ学習記録がありません</p> :
 	     <ul>
 		 {records.map((record) => (
-		     <RecordItem key={record.id} record={record} onDeleteRecord={onDeleteRecord} />
+		     <RecordItem key={record._id} record={record} onDeleteRecord={onDeleteRecord} />
 		 ))}
 	     </ul>
 
