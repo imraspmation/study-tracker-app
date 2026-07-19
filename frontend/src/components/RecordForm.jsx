@@ -1,7 +1,6 @@
-import {useState} from 'react';
+import {useEffect,useState} from 'react';
 
-export default function RecordForm({onAddRecord}) {
-    const [formData, setFormData] = useState({
+const initialFormData = {
 	studyDate: "",
 	questionTitle: "",
 	questionUrl: "",
@@ -9,7 +8,31 @@ export default function RecordForm({onAddRecord}) {
 	tags:[],
 	status:"",
 	memo:"",
-    });
+}
+
+export default function RecordForm({
+    onAddRecord,
+    onUpdateRecord,
+    editingRecord,
+    onCancelEdit
+}) {
+    const [formData, setFormData] = useState(initialFormData);
+    useEffect(() => {
+	if (editingRecord) {
+	    setFormData({
+		studyDate: editingRecord.studyDate || "",
+		questionTitle: editingRecord.questionTitle || "",
+		questionUrl: editingRecord.questionUrl || "",
+		difficulty: editingRecord.difficulty || "",
+		tags: editingRecord.tags || [],
+		status: editingRecord.status || "",
+		memo: editingRecord.memo || "",
+	    });
+	} else {
+	    setFormData(initialFormData);
+	}
+    }, [editingRecord])
+
     const handleChange = (e) => {
 	const {name, value} = e.target;
 	setFormData({
@@ -33,27 +56,28 @@ export default function RecordForm({onAddRecord}) {
     };
     const handleSubmit = (e) => {
 	e.preventDefault();
-	const newRecord = {
-	    ...formData,
+	// const newRecord = {
+	//     ...formData,
+	// }
+	// console.log(newRecord)
+	if (editingRecord) {
+	    onUpdateRecord(formData)
+	} else {
+	    onAddRecord(formData)
 	}
-	console.log(newRecord)
-	onAddRecord(newRecord)
-	setFormData({
-	    studyDate: "",
-	    questionTitle: "",
-	    questionUrl: "",
-	    difficulty: "",
-	    tags:[],
-	    status:"",
-	    memo:"",
-	});
+	setFormData(initialFormData);
+    }
+
+    const handleCancel = () => {
+	setFormData(initialFormData);
+	onCancelEdit();
     }
 
     const tagGroup = ["dp", "graph","binary-search","math","greedy"];
-    
+
     return (
 	<>
-	    <h1>学習を記録する</h1>
+	    <h1>{editingRecord ? "学習を編集する" : "学習を記録する"}</h1>
 	    <form onSubmit={handleSubmit}>
 		<div>
 		    <label htmlFor="study-date">日付</label>
@@ -68,7 +92,7 @@ export default function RecordForm({onAddRecord}) {
 		    <input type="text" id="question-url" name="questionUrl" value={formData.questionUrl} onChange={handleChange} />
 		</div>
 		<div>
-		    <label htmlFor="difficulty">difficulty : </label>	    
+		    <label htmlFor="difficulty">difficulty : </label>
 		    <input type="number" id="difficulty" name="difficulty" value={formData.difficulty} onChange={handleChange}/>
 		</div>
 		<fieldset>
@@ -94,7 +118,14 @@ export default function RecordForm({onAddRecord}) {
 		    <label htmlFor="memo">メモ</label>
 		    <textarea id="memo" name="memo" rows="5" cols="33" placeholder="ここにメモを記入" value={formData.memo} onChange={handleChange} />
 		</div>
-		<button type="submit">記録する</button>
+		<button type="submit">
+		    {editingRecord ? "更新する" : "記録する"}
+		</button>
+		{editingRecord && (
+		    <button type="button" onClick={handleCancel}>
+			キャンセル
+		    </button>
+		)}
 	    </form>
 	</>
     )
