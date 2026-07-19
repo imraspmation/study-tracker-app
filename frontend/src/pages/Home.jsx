@@ -4,12 +4,11 @@ import RecordList from '../components/RecordList';
 
 export default function Home() {
     const [records, setRecords] = useState([]);
+    const [editingRecord, setEditingRecord] = useState(null);
     useEffect(() => {
 	const fetchRecords = async () => {
 	    const res = await fetch("http://localhost:5000/records");
-	    console.log(`res:${res}`);
 	    const data = await res.json();
-	    console.log(`data:${data}`);
 	    setRecords(data)
 	};
 	fetchRecords();
@@ -39,10 +38,50 @@ export default function Home() {
 	});
 	setRecords(records.filter((record) => record._id !== id));
     }
+    const startEditRecord = (record) => {
+	setEditingRecord(record);
+    };
+    const updateRecord = async (updatedData) => {
+	const res = await fetch(
+	    `http://localhost:5000/records/${editingRecord._id}`,
+	    {
+		method: "PATCH",
+		headers: {
+		    "Content-Type": "application/json",
+		},
+		body: JSON.stringify(updatedData),
+	    }
+	);
+	if (!res.ok) {
+	    console.error("更新に失敗しました")
+	    return;
+	}
+	// console.log(await res.json());
+	const updatedRecord = await res.json();
+	setRecords(
+	    records.map((record) =>
+		record._id === updatedRecord._id ? updatedRecord : record
+	    )
+	);
+
+	setEditingRecord(null);
+    }
+    const cancelEdit = () => {
+	setEditingRecord(null);
+    }
     return (
 	<>
-	    <RecordForm onAddRecord={addRecords}/>
-	    <RecordList records={records} onDeleteRecord={deleteRecords}/>
+	    <RecordForm
+		onAddRecord={addRecords}
+		onUpdateRecord={updateRecord}
+		editingRecord={editingRecord}
+		onCancelEdit={cancelEdit}
+	    />
+	    <RecordList
+		records={records}
+		onDeleteRecord={deleteRecords}
+		onEditRecord={startEditRecord}
+	    />
 	</>
     )
 }

@@ -10,19 +10,6 @@ const Record = require("./models/Record");
 app.use(cors());
 app.use(express.json());
 
-// let records = [
-//     {
-// 	id: 1,
-// 	studyDate: "2026-06-05",
-// 	questionTitle: "ABC350 C",
-// 	questionUrl: "https://atcoder.jp/",
-// 	difficulty: 400,
-// 	tags:["graph"],
-// 	status:"review",
-// 	memo:"サンプルデータ",
-//     },
-// ];
-
 mongoose
     .connect(process.env.MONGO_URI)
     .then(() => {
@@ -49,6 +36,25 @@ app.post("/records", async (req, res) => {
 	res.status(400).json({message: "Failed to create record"});
     }
 });
+app.patch("/records/:id", async (req, res) => {
+    try {
+	const updatedRecord = await Record.findByIdAndUpdate(
+	    req.params.id,
+	    req.body,
+	    {
+		returnDocument: "after",
+		runValidators: true,
+	    }
+	);
+
+	if (!updatedRecord) {
+	    return res.status(404).json({message: "Record not found"});
+	}
+	res.status(200).json(updatedRecord);
+    } catch (err) {
+	res.status(400).json({message: "failed to update record"})
+    }
+})
 app.delete("/records/:id", async (req, res) => {
     try {
 	const deletedRecord = await Record.findByIdAndDelete(req.params.id);

@@ -1,6 +1,6 @@
 import RecordItem from "./RecordItem";
 
-export default function RecordList({records,onDeleteRecord}) {
+export default function RecordList({records,onDeleteRecord, onEditRecord}) {
     return (
 	<>
 	    <h1>学習記録一覧</h1>
@@ -8,7 +8,12 @@ export default function RecordList({records,onDeleteRecord}) {
 	     <p>まだ学習記録がありません</p> :
 	     <ul>
 		 {records.map((record) => (
-		     <RecordItem key={record._id} record={record} onDeleteRecord={onDeleteRecord} />
+		     <RecordItem
+			 key={record._id}
+			 record={record}
+			 onDeleteRecord={onDeleteRecord}
+			 onEditRecord={onEditRecord}
+		     />
 		 ))}
 	     </ul>
 
