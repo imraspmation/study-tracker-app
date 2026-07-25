@@ -26,7 +26,6 @@ export default function RecordForm({
     } = useForm({
 	defaultValues: initialFormData,
     })
-    // const [formData, setFormData] = useState(initialFormData);
     useEffect(() => {
 	if (editingRecord) {
 	    reset({
@@ -43,40 +42,6 @@ export default function RecordForm({
 	}
     }, [editingRecord, reset]);
 
-    // const handleChange = (e) => {
-    // 	const {name, value} = e.target;
-    // 	setFormData({
-    // 	    ...formData,
-    // 	    [name]: value,
-    // 	});
-    // };
-    // const handleTagChange = (e) => {
-    // 	const {value, checked} = e.target;
-    // 	if (checked) {
-    // 	    setFormData({
-    // 		...formData,
-    // 		tags:[...formData.tags,value]
-    // 	    })
-    // 	} else {
-    // 	    setFormData({
-    // 		...formData,
-    // 		tags: formData.tags.filter((tag) => tag !== value),
-    // 	    });
-    // 	}
-    // };
-    // const handleSubmit = (e) => {
-    // 	e.preventDefault();
-    // 	// const newRecord = {
-    // 	//     ...formData,
-    // 	// }
-    // 	// console.log(newRecord)
-    // 	if (editingRecord) {
-    // 	    onUpdateRecord(formData)
-    // 	} else {
-    // 	    onAddRecord(formData)
-    // 	}
-    // 	setFormData(initialFormData);
-    // }
     const onSubmit = (data) => {
 	const submitData = {
 	    ...data,
@@ -202,14 +167,3 @@ export default function RecordForm({
     )
 }
 
-
-	    // <div>
-	    // 	<label htmlFor="tags">タグを選択してください(複数可)</label>
-	    // 	<select name="tags" id="tags" multiple>
-	    // 	    <option value="dp">DP</option>
-	    // 	    <option value="graph">graph</option>
-	    // 	    <option value="binary-search">binary-search</option>
-	    // 	    <option value="math">math</option>
-	    // 	    <option value="greedy">greedy</option>
-	    // 	</select>
-	    // </div>
