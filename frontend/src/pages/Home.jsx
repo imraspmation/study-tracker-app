@@ -22,12 +22,15 @@ export default function Home() {
 		},
 		body: JSON.stringify(newRecord),
 	    });
-	    const savedRecord = await res.json();
+	    const data = await res.json();
 	    if (!res.ok) {
-		console.error("作成に失敗", savedRecord);
-		return;
+		const error = new Error(data.message || "保存に失敗しました");
+		error.fieldErrors = data.errors;
+		throw error;
+		// console.error("作成に失敗", savedRecord);
+		// return;
 	    }
-	    setRecords([...records, savedRecord]);
+	    setRecords([...records, data]);
 	} catch (err) {
 	    console.log("通信エラー:", err)
 	}
@@ -52,15 +55,19 @@ export default function Home() {
 		body: JSON.stringify(updatedData),
 	    }
 	);
+	const data = res.json();
 	if (!res.ok) {
-	    console.error("更新に失敗しました")
-	    return;
+	    const error = new Error(data.message || "更新に失敗しました");
+	    error.fieldErrors = data.errors;
+	    throw error;
+	    // console.error("更新に失敗しました")
+	    // return;
 	}
 	// console.log(await res.json());
-	const updatedRecord = await res.json();
+	// const updatedRecord = await res.json();
 	setRecords(
 	    records.map((record) =>
-		record._id === updatedRecord._id ? updatedRecord : record
+		record._id === data._id ? data : record
 	    )
 	);
 

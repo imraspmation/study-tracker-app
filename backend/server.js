@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const Record = require("./models/Record");
+const {validateRecordInput} = require("./validators/recordValidator");
 
 app.use(cors());
 app.use(express.json());
@@ -29,30 +30,53 @@ app.get("/records", async (req, res) => {
 });
 app.post("/records", async (req, res) => {
     try {
+	const validation = validateRecordInput(req.body);
+
+	if (!validation.isValid) {
+	    return res.status(400).json({
+		message: "入力内容に誤りがあります",
+		errors: validation.errors,
+	    });
+	}
+		
 	const newRecord = await Record.create(req.body);
 	res.status(201).json(newRecord);
     } catch (err) {
-	console.log(err)
-	res.status(400).json({message: "Failed to create record"});
+	console.error(err)
+	// res.status(400).json({message: "Failed to create record"});
+	res.status(500).json({
+	    message:"記録の保存に失敗しました",
+	});
     }
 });
 app.patch("/records/:id", async (req, res) => {
     try {
+	const validation = validateRecordInput(req.body);
+
+	if (!validation.isValid) {
+	    return res.status(400).json({
+		message: "入力内容に誤りがあります",
+		errors: validation.errors,
+	    });
+	}
+	
 	const updatedRecord = await Record.findByIdAndUpdate(
 	    req.params.id,
-	    req.body,
+	    validation.data,
 	    {
-		returnDocument: "after",
+		new: true,
 		runValidators: true,
 	    }
 	);
 
 	if (!updatedRecord) {
-	    return res.status(404).json({message: "Record not found"});
+	    return res.status(404).json({message: "記録が見つかりません"});
 	}
+	
 	res.status(200).json(updatedRecord);
     } catch (err) {
-	res.status(400).json({message: "failed to update record"})
+	console.error(err)
+	res.status(500).json({message: "記録の更新に失敗しました"});
     }
 })
 app.delete("/records/:id", async (req, res) => {
