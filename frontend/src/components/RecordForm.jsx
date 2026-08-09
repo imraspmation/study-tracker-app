@@ -22,6 +22,7 @@ export default function RecordForm({
 	register,
 	handleSubmit,
 	reset,
+	setError,
 	formState: {errors},
     } = useForm({
 	defaultValues: initialFormData,
@@ -42,18 +43,37 @@ export default function RecordForm({
 	}
     }, [editingRecord, reset]);
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
 	const submitData = {
 	    ...data,
-	    difficulty: data.difficulty === "" ? "" : Number(data.difficulty),
+	    questionTitle: data.questionTitle.trim(),
+	    questionUrl: data.questionUrl.trim(),
+	    difficulty: data.difficulty === "" ? undefined : Number(data.difficulty),
 	    tags: data.tags || [],
 	};
-	if (editingRecord) {
-	    onUpdateRecord(submitData);
-	} else {
-	    onAddRecord(submitData);
+
+	try{
+	    if (editingRecord) {
+		await onUpdateRecord(submitData);
+	    } else {
+		await onAddRecord(submitData);
+	    }
+	    reset(initialFormData);
+	} catch (err) {
+	    if (err.fieldErrors) {
+		Object.entries(err.fieldErrors).forEach(([field, message]) => {
+		    setError(field, {
+			type: "server",
+			message,
+		    });
+		});
+		return;
+	    }
+	    setError("root.server", {
+		type: "server",
+		message: err.message || "保存に失敗しました",
+	    });
 	}
-	reset(initialFormData);
     };
     const handleCancel = () => {
 	reset(initialFormData);
