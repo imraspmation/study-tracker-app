@@ -113,7 +113,11 @@ export default function Home() {
 	return (matchesSearch && matchesStatus && matchesTag && matchesDifficulty); 
     })
     return (
-	<>
+	<main className="app-shell">
+	    <header className="page-header">
+		<h1>Study Tracker</h1>
+		<p>競プロ・Web学習の記録を残して、復習しやすくするアプリ</p>
+	    </header>
 	    <RecordForm
 		onAddRecord={addRecords}
 		onUpdateRecord={updateRecord}
@@ -131,7 +135,7 @@ export default function Home() {
 		onDifficultyFilterChange={setDifficultyFilter}
 		onResetFilters={resetFilters}
 	    />
-	    <p>
+	    <p className="record-count">
 		表示件数: {filteredRecords.length} / {records.length}
 	    </p>
 	    <RecordList
@@ -139,6 +143,6 @@ export default function Home() {
 		onDeleteRecord={deleteRecords}
 		onEditRecord={startEditRecord}
 	    />
-	</>
+	</main>
     )
 }
