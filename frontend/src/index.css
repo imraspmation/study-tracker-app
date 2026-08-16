@@ -1,3 +1,232 @@
+. {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+button,input,select,textarea {
+    font: inherit:
+}
+button {
+    cursor: pointer;
+}
+
+a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.app-shell {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 16px;
+}
+
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-header p {
+    margin: 8px 0 0;
+    color: #6b7280;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 24px rgba(15,23,42, 0.06);
+}
+.card-title {
+    margin: 0 0 16px;
+    font-size:22px;
+}
+
+.form-grid {
+    display: grid;
+    gap: 16px;
+}
+.form-control {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.form-control label, fieldset-label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.input, .select, .textarea {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 10px 12px;
+    background: #ffffff;
+}
+.input:focus, .select:focus, .textarea:focus {
+    outline: 2px solid #93c5fd;
+    border-color: #3b82f6;
+}
+.textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+.error-text {
+    margin: 4px 0 0;
+    color: #dc2626;
+    font-size: 14px;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.ckeckbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #d1d5db;
+    border-radius: 999px;
+    padding: 8px 12px;
+    background: #f9fafb;
+    font-size: 14px;
+}
+
+.button-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+.btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-secondary {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.btn-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+.btn:hover {
+    opacity: 0.9;
+}
+.filter-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap:16px;
+}
+.record-count {
+    margin: 0 0 16px;
+    color: #6b7280;
+}
+.records-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 16px;
+}
+.record-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+}
+.record-card-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+.record-title {
+    margin: 0;
+    font-size: 20px;
+}
+
+.record-meta {
+    margin: 6px 0;
+    color: #4b5563;
+}
+.badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0;
+}
+.badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #eef2ff;
+    color: #3730a3;
+}
+.status-badge {
+    background: #f3f4f6;
+    color: #373151;
+}
+.status-solved {
+    background: #dcfce7;
+    color: #166534;
+}
+.status-review {
+    background: #fef3c7;
+    color: #92400e;
+}
+.status-unsolved {
+    background: #fee2e2;
+    color: #991b1b;
+}
+.record-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+.empty-message {
+    background: #ffffff;
+    border: 1px dashed #d1d5db;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    color: #6b7280;
+}
+@media (min-width: 768px) {
+    .filter-grid {
+	grid-template-columns: 2fr 1fr 1fr 1fr;
+	align-items: end;
+    }
+}
 /* :root { */
 /*   --text: #6b6375; */
 /*   --text-h: #08060d; */
