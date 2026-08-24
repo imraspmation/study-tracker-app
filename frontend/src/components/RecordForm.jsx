@@ -86,11 +86,23 @@ export default function RecordForm({
 	    <h2 className="card-title">
 		{editingRecord ? "学習記録を編集する" : "学習を記録する"}
 	    </h2>
-	    
+
 	    <form className="form-grid" onSubmit={handleSubmit(onSubmit)}>
 		<div className="form-control">
 		    <label htmlFor="study-date">日付</label>
 		    <input className="input" type="date" id="study-date" {...register("studyDate")}/>
+		</div>
+		<div className="form-control">
+		    <label htmlFor="difficulty">difficulty : </label>
+		    <input className="input" type="number" id="difficulty"
+			   {...register("difficulty", {
+			       min: {
+				   value: 0,
+				   message: "difficultyは0以上で入力してください",
+			       },
+			   })}
+		    />
+		    {errors.difficulty && <p className="error-text">{errors.difficulty.message}</p>}
 		</div>
 		<div className="form-control">
 		    <label htmlFor="question-title">問題名 : </label>
@@ -124,20 +136,8 @@ export default function RecordForm({
 		    />
 		    {errors.questionUrl && <p className="error-text">{errors.questionUrl.message}</p>}
 		</div>
-		
-		<div className="form-control">
-		    <label htmlFor="difficulty">difficulty : </label>
-		    <input className="input" type="number" id="difficulty"
-			   {...register("difficulty", {
-			       min: {
-				   value: 0,
-				   message: "difficultyは0以上で入力してください",
-			       },
-			   })}
-		    />
-		    {errors.difficulty && <p className="error-text">{errors.difficulty.message}</p>}
-		</div>
-		<fieldset className="checkbox-group">
+
+		<fieldset className="checkbox-group form-full-width">
 		    <legend className="fieldset-label">タグ</legend>
 		    {tagGroup.map((tag) => (
 			<label className="checkbox-label" key={tag}>
@@ -166,7 +166,7 @@ export default function RecordForm({
 		    {errors.status && <p className="error-text">{errors.status.message}</p>}
 		</div>
 
-		<div className="form-control">
+		<div className="form-control form-full-width">
 		    <label htmlFor="memo">メモ</label>
 		    <textarea className="textarea" id="memo" name="memo" rows="5" cols="33" placeholder="解法メモ・詰まった点・復習ポイントなど"
 			      {...register("memo",{
@@ -180,7 +180,7 @@ export default function RecordForm({
 			<p className="error-text">{errors.memo.message}</p>
 		    )}
 		</div>
-		<div className="button-row">
+		<div className="button-row form-full-width">
 		    <button className="btn btn-primary" type="submit">
 			{editingRecord ? "更新する" : "記録する"}
 		    </button>
@@ -194,4 +194,3 @@ export default function RecordForm({
 	</section>
     )
 }
-

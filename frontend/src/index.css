@@ -55,6 +55,7 @@ a:hover {
 
 .form-grid {
     display: grid;
+    grid-template-columns: 1fr;
     gap: 16px;
 }
 .form-control {
@@ -67,7 +68,9 @@ a:hover {
     font-weight: 600;
     font-size: 14px;
 }
-
+.form-full-width {
+    grid-column: 1 / -1;
+}
 .input, .select, .textarea {
     width: 100%;
     max-width: 100%;
@@ -224,6 +227,9 @@ a:hover {
     color: #6b7280;
 }
 @media (min-width: 768px) {
+    .form-grid {
+	grid-template-columns: repeat(2, minmax(0, 1fr));m
+    }
     .filter-grid {
 	grid-template-columns: 2fr 1fr 1fr 1fr;
 	align-items: end;
