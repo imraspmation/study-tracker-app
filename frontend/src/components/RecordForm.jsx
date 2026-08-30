@@ -82,10 +82,13 @@ export default function RecordForm({
 
 
     return (
-	<section className="card">
+	<section
+	    className={`card record-form-card ${editingRecord ? "is-editing" : ""}`}>
 	    <h2 className="card-title">
-		{editingRecord ? "学習記録を編集する" : "学習を記録する"}
+		{editingRecord ? "学習記録を編集中" : "学習を記録する"}
 	    </h2>
+
+	    {editingRecord && (<p className="editing-message">「{editingRecord.questionTitle}」を編集中です</p>)}
 
 	    <form className="form-grid" onSubmit={handleSubmit(onSubmit)}>
 		<div className="form-control">

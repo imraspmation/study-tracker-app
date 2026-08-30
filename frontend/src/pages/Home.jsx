@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState,useRef, useEffect} from 'react';
 import RecordForm from '../components/RecordForm';
 import RecordFilter from "../components/RecordFilter";
 import RecordList from '../components/RecordList';
@@ -11,7 +11,7 @@ export default function Home() {
     const [statusFilter, setStatusFilter] = useState("");
     const [tagFilter, setTagFilter] = useState("");
     const [difficultyFilter, setDifficultyFilter] = useState("");
-    
+
     useEffect(() => {
 	const fetchRecords = async () => {
 	    const res = await fetch("http://localhost:5000/records");
@@ -20,6 +20,17 @@ export default function Home() {
 	};
 	fetchRecords();
     },[]);
+    const formRef = useRef(null);
+
+    useEffect(() => {
+	if (editingRecord) {
+	    formRef.current?.scrollIntoView({
+		behavior: "smooth",
+		block: "start",
+	    });
+	}
+    }, [editingRecord])
+
     const addRecords = async (newRecord) => {
 	try{
 	    const res = await fetch("http://localhost:5000/records", {
@@ -110,7 +121,7 @@ export default function Home() {
 	const matchesDifficulty = difficultyFilter === "" ||
 	      Number(record.difficulty) >= Number(difficultyFilter);
 
-	return (matchesSearch && matchesStatus && matchesTag && matchesDifficulty); 
+	return (matchesSearch && matchesStatus && matchesTag && matchesDifficulty);
     })
     return (
 	<main className="app-shell">
@@ -118,12 +129,14 @@ export default function Home() {
 		<h1>Study Tracker</h1>
 		<p>競プロ・Web学習の記録を残して、復習しやすくするアプリ</p>
 	    </header>
-	    <RecordForm
-		onAddRecord={addRecords}
-		onUpdateRecord={updateRecord}
-		editingRecord={editingRecord}
-		onCancelEdit={cancelEdit}
-	    />
+	    <div ref={formRef} className="form-scroll-target">
+		<RecordForm
+		    onAddRecord={addRecords}
+		    onUpdateRecord={updateRecord}
+		    editingRecord={editingRecord}
+		    onCancelEdit={cancelEdit}
+		/>
+	    </div>
 	    <RecordFilter
 		searchText={searchText}
 		onSearchTextChange={setSearchText}
