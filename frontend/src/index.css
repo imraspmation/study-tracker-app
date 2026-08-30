@@ -71,6 +71,8 @@ a:hover {
 .form-full-width {
     grid-column: 1 / -1;
 }
+
+
 .input, .select, .textarea {
     width: 100%;
     max-width: 100%;
@@ -181,6 +183,8 @@ a:hover {
     margin: 6px 0;
     color: #4b5563;
 }
+
+
 .badge-row {
     display: flex;
     flex-wrap: wrap;
@@ -225,6 +229,27 @@ a:hover {
     padding: 24px;
     text-align: center;
     color: #6b7280;
+}
+
+.form-scroll-target {
+    scroll-margin-top: 24px;
+}
+.record-form-card {
+    transition:
+	border-color 0.2s,
+	background-color 0.2s,
+	box-shadow 0.2s;
+}
+.record-form-card.is-editing {
+    border-color: #f59e0b;
+    background: #fffbeb;
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.12);
+}
+.editing-message {
+    margin: 6px 0 16px;
+    color: #92400e;
+    font-size: 14px;
+    font-weight: 600;
 }
 @media (min-width: 768px) {
     .form-grid {
