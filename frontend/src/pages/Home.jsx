@@ -12,12 +12,31 @@ export default function Home() {
     const [tagFilter, setTagFilter] = useState("");
     const [difficultyFilter, setDifficultyFilter] = useState("");
 
-    useEffect(() => {
-	const fetchRecords = async () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [loadError, setLoadError] = useState("");
+
+    const [deletingId, setDeletingId] = useState(null);
+
+    const fetchRecords = async () => {
+	try{
+	    setIsLoading(true);
+	    setLoadError("");
 	    const res = await fetch("http://localhost:5000/records");
+	    if (!res.ok) {
+		throw new Error("学習記録の取得に失敗しました");
+	    }
 	    const data = await res.json();
 	    setRecords(data)
-	};
+	} catch (err) {
+	    console.error(err);
+
+	    setLoadError(err.message || "学習記録の取得に失敗しました");
+	} finally {
+	    setIsLoading(false)
+	}
+    }
+
+    useEffect(() => {
 	fetchRecords();
     },[]);
     const formRef = useRef(null);
@@ -54,14 +73,20 @@ export default function Home() {
 	}
     };
     const deleteRecords = async (id) => {
-	const res = await fetch(`http://localhost:5000/records/${id}`,{
-	    method: "DELETE",
-	});
-	if (!res.ok) {
-	    alert("削除に失敗しました");
-	    return;
+	try{
+	    setDeletingId(id);
+	    const res = await fetch(`http://localhost:5000/records/${id}`,{
+		method: "DELETE",
+	    });
+	    if (!res.ok) {
+		throw new Error("削除に失敗しました");
+	    }
+	    setRecords(records.filter((record) => record._id !== id));
+	} catch (err) {
+	    alert(err.message);
+	} finally {
+	    setDeletingId(null);
 	}
-	setRecords(records.filter((record) => record._id !== id));
     }
     const startEditRecord = (record) => {
 	setEditingRecord(record);
@@ -151,11 +176,25 @@ export default function Home() {
 	    <p className="record-count">
 		表示件数: {filteredRecords.length} / {records.length}
 	    </p>
+	    {isLoading ? (
+		<div className="loading-message">
+		    学習記録を読み込んでいます...
+		</div>
+	    ) : loadError ? (
+		<div className="error-panel">
+		    <p>{loadError}</p>
+		    <button type="button" className="btn btn-secondary" onClick={fetchRecords}>
+			再読み込み
+		    </button>
+		</div>
+	    ) : (
 	    <RecordList
 		records={filteredRecords}
 		onDeleteRecord={deleteRecords}
 		onEditRecord={startEditRecord}
+		deletingId={deletingId}
 	    />
+	    )}
 	</main>
     )
 }

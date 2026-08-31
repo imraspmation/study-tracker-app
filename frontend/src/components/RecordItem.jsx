@@ -1,3 +1,4 @@
+import {useState} from "react";
 const statusLabels = {
     solved: "解けた",
     review: "要復習",
@@ -12,10 +13,10 @@ const statusClassNames = {
     "":"",
 }
 
-export default function RecordItem({record, onDeleteRecord,onEditRecord}){
+export default function RecordItem({record, onDeleteRecord,onEditRecord, deletingId}){
     const statusLabel = statusLabels[record.status] || "";
     const statusClassName = statusClassNames[record.status] || "";
-    
+
     return (
 	<li className="record-card">
 	    <div className="record-card-header">
@@ -35,7 +36,7 @@ export default function RecordItem({record, onDeleteRecord,onEditRecord}){
 		    </a>
 		</p>
 	    )}
-	    
+
 	    <p className="record-meta">
 		difficulty: {record.difficulty ?? "未入力"}
 	    </p>
@@ -61,12 +62,12 @@ export default function RecordItem({record, onDeleteRecord,onEditRecord}){
 		    onClick={() => onEditRecord(record)}>
 		    編集
 		</button>
-		
+
 		<button
 		    className="btn btn-danger"
 		    type="button"
 		    onClick={() => onDeleteRecord(record._id)}>
-		    削除する
+		    {deletingId === record._id ? "削除中..." : "削除"}
 		</button>
 	    </div>
 	</li>
