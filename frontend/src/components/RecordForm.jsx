@@ -23,7 +23,10 @@ export default function RecordForm({
 	handleSubmit,
 	reset,
 	setError,
-	formState: {errors},
+	formState: {
+	    errors,
+	    isSubmitting,
+	},
     } = useForm({
 	defaultValues: initialFormData,
     })
@@ -183,9 +186,16 @@ export default function RecordForm({
 			<p className="error-text">{errors.memo.message}</p>
 		    )}
 		</div>
+		{errors.root?.server && (
+		    <p className="error-text form-full-width">
+			{errors.root.server.message}
+		    </p>
+		)}
 		<div className="button-row form-full-width">
-		    <button className="btn btn-primary" type="submit">
-			{editingRecord ? "更新する" : "記録する"}
+		    <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
+			{isSubmitting
+			 ? editingRecord ? "更新中" : "保存中"
+			 : editingRecord ? "更新する" : "記録する"}
 		    </button>
 		    {editingRecord && (
 			<button className="btn btn-secondary" type="button" onClick={handleCancel}>

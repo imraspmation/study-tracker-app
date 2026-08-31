@@ -1,6 +1,6 @@
 import RecordItem from "./RecordItem";
 
-export default function RecordList({records,onDeleteRecord, onEditRecord}) {
+export default function RecordList({records,onDeleteRecord, onEditRecord,deletingId}) {
     return (
 	<section>
 	    <h2 className="card-title">学習記録一覧</h2>
@@ -14,6 +14,7 @@ export default function RecordList({records,onDeleteRecord, onEditRecord}) {
 			 record={record}
 			 onDeleteRecord={onDeleteRecord}
 			 onEditRecord={onEditRecord}
+			 deletingId={deletingId}
 		     />
 		 ))}
 	     </ul>
