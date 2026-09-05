@@ -23,6 +23,3 @@ export default function RecordList({records,onDeleteRecord, onEditRecord,deletin
 	</section>
     )
 }
-		// {for (record of records){
-		//     <RecordItem record={record} />
-		// }}
