@@ -17,11 +17,13 @@ export default function Home() {
 
     const [deletingId, setDeletingId] = useState(null);
 
+    const API_URL = import.meta.env.VITE_API_URL;
+
     const fetchRecords = async () => {
 	try{
 	    setIsLoading(true);
 	    setLoadError("");
-	    const res = await fetch("http://localhost:5000/records");
+	    const res = await fetch(`${API_URL}/records`);
 	    if (!res.ok) {
 		throw new Error("学習記録の取得に失敗しました");
 	    }
@@ -52,7 +54,7 @@ export default function Home() {
 
     const addRecords = async (newRecord) => {
 	try{
-	    const res = await fetch("http://localhost:5000/records", {
+	    const res = await fetch(`${API_URL}/records`, {
 		method: "POST",
 		headers: {
 		    "Content-Type":"application/json",
@@ -75,7 +77,7 @@ export default function Home() {
     const deleteRecords = async (id) => {
 	try{
 	    setDeletingId(id);
-	    const res = await fetch(`http://localhost:5000/records/${id}`,{
+	    const res = await fetch(`${API_URL}/records/${id}`,{
 		method: "DELETE",
 	    });
 	    if (!res.ok) {
@@ -93,7 +95,7 @@ export default function Home() {
     };
     const updateRecord = async (updatedData) => {
 	const res = await fetch(
-	    `http://localhost:5000/records/${editingRecord._id}`,
+	    `${API_URL}/records/${editingRecord._id}`,
 	    {
 		method: "PATCH",
 		headers: {
