@@ -38,7 +38,7 @@ app.post("/records", async (req, res) => {
 		errors: validation.errors,
 	    });
 	}
-		
+
 	const newRecord = await Record.create(req.body);
 	res.status(201).json(newRecord);
     } catch (err) {
@@ -59,7 +59,7 @@ app.patch("/records/:id", async (req, res) => {
 		errors: validation.errors,
 	    });
 	}
-	
+
 	const updatedRecord = await Record.findByIdAndUpdate(
 	    req.params.id,
 	    validation.data,
@@ -72,7 +72,7 @@ app.patch("/records/:id", async (req, res) => {
 	if (!updatedRecord) {
 	    return res.status(404).json({message: "記録が見つかりません"});
 	}
-	
+
 	res.status(200).json(updatedRecord);
     } catch (err) {
 	console.error(err)
@@ -89,10 +89,6 @@ app.delete("/records/:id", async (req, res) => {
     } catch (err) {
 	res.status(500).json({message: "Failed to delete record"});
     }
-    // const id = Number(req.params.id);
-
-    // records = records.filter((record) => record.id !== id);
-    // res.status(204).send();
 });
 
 const PORT = process.env.PORT || 5000;
