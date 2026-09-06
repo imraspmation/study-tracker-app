@@ -273,7 +273,7 @@ a:hover {
 
 @media (min-width: 768px) {
     .form-grid {
-	grid-template-columns: repeat(2, minmax(0, 1fr));m
+	grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .filter-grid {
 	grid-template-columns: 2fr 1fr 1fr 1fr;
