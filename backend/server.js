@@ -10,7 +10,7 @@ const {validateRecordInput} = require("./validators/recordValidator");
 
 app.use(
     cors({
-	origin: [process.env.FRONTEND_URL,"http://localhost:5173"],
+	origin: [process.env.FRONTEND_URL,"http://localhost:5173",],
     })
 );
 app.use(express.json());
@@ -43,7 +43,7 @@ app.post("/records", async (req, res) => {
 	    });
 	}
 
-	const newRecord = await Record.create(req.body);
+	const newRecord = await Record.create(validation.data);
 	res.status(201).json(newRecord);
     } catch (err) {
 	console.error(err)
@@ -68,7 +68,7 @@ app.patch("/records/:id", async (req, res) => {
 	    req.params.id,
 	    validation.data,
 	    {
-		new: true,
+		returnDocument: "after",
 		runValidators: true,
 	    }
 	);

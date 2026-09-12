@@ -53,26 +53,20 @@ export default function Home() {
     }, [editingRecord])
 
     const addRecords = async (newRecord) => {
-	try{
-	    const res = await fetch(`${API_URL}/records`, {
-		method: "POST",
-		headers: {
-		    "Content-Type":"application/json",
-		},
-		body: JSON.stringify(newRecord),
-	    });
-	    const data = await res.json();
-	    if (!res.ok) {
-		const error = new Error(data.message || "保存に失敗しました");
-		error.fieldErrors = data.errors;
-		throw error;
-		// console.error("作成に失敗", savedRecord);
-		// return;
-	    }
-	    setRecords([...records, data]);
-	} catch (err) {
-	    console.log("通信エラー:", err)
+	const res = await fetch(`${API_URL}/records`, {
+	    method: "POST",
+	    headers: {
+		"Content-Type":"application/json",
+	    },
+	    body: JSON.stringify(newRecord),
+	});
+	const data = await res.json();
+	if (!res.ok) {
+	    const error = new Error(data.message || "保存に失敗しました");
+	    error.fieldErrors = data.errors;
+	    throw error;
 	}
+	setRecords([data,...records,]);
     };
     const deleteRecords = async (id) => {
 	try{

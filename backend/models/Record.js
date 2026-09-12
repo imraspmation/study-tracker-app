@@ -8,15 +8,25 @@ const recordSchema = new mongoose.Schema(
 	questionTitle: {
 	    type: String,
 	    required: true,
+	    trim: true,
+	    maxlength: 100,
 	},
 	questionUrl: {
 	    type: String,
 	},
 	difficulty: {
 	    type: Number,
+	    min: 0,
 	},
 	tags: {
 	    type: [String],
+	    enum: [
+		"dp",
+		"graph",
+		"binary-search",
+		"math",
+		"greedy",
+	    ],
 	    default: [],
 	},
 	status: {
