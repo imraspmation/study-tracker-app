@@ -20,7 +20,7 @@ function validateRecordInput(body) {
     if (!isString(body.questionTitle) || body.questionTitle.trim() === "") {
 	errors.questionTitle = "問題名は必須です";
     } else if (body.questionTitle.trim().length > 100) {
-	errors.questiontitle = "問題名は100文字以内で入力してください";
+	errors.questionTitle = "問題名は100文字以内で入力してください";
     } else {
 	data.questionTitle = body.questionTitle.trim();
     }
@@ -85,7 +85,7 @@ function validateRecordInput(body) {
 	data.memo = "";
     } else if (!isString(body.memo)) {
 	errors.memo = "メモの形式が正しくありません";
-    } else if (body.memo > 1000) {
+    } else if (body.memo.length > 1000) {
 	errors.memo = "メモは1000文字以内で入力してください";
     } else {
 	data.memo = body.memo;
