@@ -1,4 +1,4 @@
-import {useEffect,useState} from 'react';
+import {useEffect} from 'react';
 import {useForm} from "react-hook-form";
 
 const initialFormData = {
@@ -36,7 +36,7 @@ export default function RecordForm({
 		studyDate: editingRecord.studyDate || "",
 		questionTitle: editingRecord.questionTitle || "",
 		questionUrl: editingRecord.questionUrl || "",
-		difficulty: editingRecord.difficulty || "",
+		difficulty: editingRecord.difficulty ?? "",
 		tags: editingRecord.tags || [],
 		status: editingRecord.status || "",
 		memo: editingRecord.memo || "",
@@ -130,10 +130,11 @@ export default function RecordForm({
 		    <input className="input" type="text" id="question-url"
 			   {...register("questionUrl", {
 			       validate: (value) => {
-				   if (!value) return true;
+				   const trimmedValue = value.trim();
+				   if (!trimmedValue) return true;
 				   try {
-				       new URL(value);
-				       return true;
+				       const uel = new URL(trimmedValue);
+				       return ["http:","https:"] || "URLはhttpまたはhttpsで入力してください";
 				   } catch {
 				       return "URLの形式が正しくありません";
 				   }
