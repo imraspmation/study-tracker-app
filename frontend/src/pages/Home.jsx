@@ -66,7 +66,7 @@ export default function Home() {
 	    error.fieldErrors = data.errors;
 	    throw error;
 	}
-	setRecords([data,...records,]);
+	setRecords((records) => [data,...records,]);
     };
     const deleteRecords = async (id) => {
 	try{
@@ -77,7 +77,7 @@ export default function Home() {
 	    if (!res.ok) {
 		throw new Error("削除に失敗しました");
 	    }
-	    setRecords(records.filter((record) => record._id !== id));
+	    setRecords((records) => records.filter((record) => record._id !== id));
 	} catch (err) {
 	    alert(err.message);
 	} finally {
@@ -109,7 +109,7 @@ export default function Home() {
 	// console.log(await res.json());
 	// const updatedRecord = await res.json();
 	setRecords(
-	    records.map((record) =>
+	    (records) => records.map((record) =>
 		record._id === data._id ? data : record
 	    )
 	);
