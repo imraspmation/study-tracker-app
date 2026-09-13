@@ -66,6 +66,7 @@ export default function RecordItem({record, onDeleteRecord,onEditRecord, deletin
 		<button
 		    className="btn btn-danger"
 		    type="button"
+		    disabled={deletingId === record._id}
 		    onClick={() => onDeleteRecord(record._id)}>
 		    {deletingId === record._id ? "削除中..." : "削除"}
 		</button>
