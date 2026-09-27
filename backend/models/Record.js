@@ -36,6 +36,7 @@ const recordSchema = new mongoose.Schema(
 	},
 	memo: {
 	    type: String,
+	    maxlength: 1000,
 	},
     },
     {
