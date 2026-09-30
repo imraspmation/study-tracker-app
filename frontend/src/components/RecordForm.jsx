@@ -133,7 +133,7 @@ export default function RecordForm({
 				   const trimmedValue = value.trim();
 				   if (!trimmedValue) return true;
 				   try {
-				       const uel = new URL(trimmedValue);
+				       const url = new URL(trimmedValue);
 				       return ["http:","https:"].includes(url.protocol) || "URLはhttpまたはhttpsで入力してください";
 				   } catch {
 				       return "URLの形式が正しくありません";
