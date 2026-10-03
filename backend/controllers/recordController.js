@@ -1,5 +1,18 @@
 const Record = require("../models/Record.js");
-const {validateRecordInput} = require("../validators/recordValidator");
+const {recordSchema} = require("../validators/recordSchema");
+
+const formatZodErrors = (zodError) => {
+    const errors = {};
+
+    zodError.issues.forEach((issue) => {
+	const field = issue.path[0];
+
+	if (field && !errors[field]) {
+	    errors[field] = issue.message;
+	}
+    });
+    return errors;
+}
 
 const getRecords = async (req, res) => {
     try {
@@ -12,16 +25,15 @@ const getRecords = async (req, res) => {
 
 const createRecord = async (req, res) => {
     try {
-	const validation = validateRecordInput(req.body);
-
-	if (!validation.isValid) {
+	const result = recordSchema.safeParse(req.body);
+	if (!result.success) {
 	    return res.status(400).json({
 		message: "入力内容に誤りがあります",
-		errors: validation.errors,
+		errors: formatZodErrors(result.error),
 	    });
 	}
 
-	const newRecord = await Record.create(validation.data);
+	const newRecord = await Record.create(result.data);
 	res.status(201).json(newRecord);
     } catch (err) {
 	console.error(err)
@@ -33,17 +45,17 @@ const createRecord = async (req, res) => {
 
 const updateRecord = async (req, res) => {
     try {
-	const validation = validateRecordInput(req.body);
-	if (!validation.isValid) {
+	const result = recordSchema.safeParse(req.body);
+	if (!result.success) {
 	    return res.status(400).json({
 		message: "入力内容に誤りがあります",
-		errors: validation.errors,
+		errors: formatZodErrors(result.error),
 	    });
 	}
 
 	const updatedRecord = await Record.findByIdAndUpdate(
 	    req.params.id,
-	    validation.data,
+	    result.data,
 	    {
 		returnDocument: "after",
 		runValidators: true,
