@@ -1,2 +1,5 @@
-MONGO_URI=mongodb://127.0.0.1:27017/study-tracker
+MONGODB_USERNAME="gottinjob_db_user"
+MONGODB_PASSWORD="H3YKM4GU1FKho3IO"
+MONGODB_URI=mongodb+srv://gottinjob_db_user:H3YKM4GU1FKho3IO@studytrackerapp.dbayskt.mongodb.net/?appName=StudyTrackerApp
+FRONTEND_URL=http://localhost:5173
 PORT=5000
