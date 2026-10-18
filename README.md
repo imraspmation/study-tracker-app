@@ -4,6 +4,14 @@
 
 問題ごとにDifficulty・タグ・ステータス・メモなどを保存し、検索・フィルタを使って学習内容を振り返ることができます。
 
+## デモ
+
+[Study Tracker を試す](https://study-tracker-app-umber.vercel.app/)
+
+## アプリ画面
+
+![Study Tracker](./images/StudyTrackerApp.png)
+
 ## 主な機能
 
 - 学習記録の登録・編集・削除
