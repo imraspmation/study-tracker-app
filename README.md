@@ -4,6 +4,15 @@
 
 問題ごとにDifficulty・タグ・ステータス・メモなどを保存し、検索・フィルタを使って学習内容を振り返ることができます。
 
+## 作成背景
+
+AtCoderやWeb開発の学習を進める中で、
+「どの問題を解いたか」「どこを復習する必要があるか」を
+一元管理したいと考え、このアプリを作成しました。
+
+単なる記録だけでなく、タグ・ステータス・Difficultyによる
+検索・絞り込みを行えるようにし、復習しやすい設計を意識しています。
+
 ## デモ
 
 [Study Tracker を試す](https://study-tracker-app-umber.vercel.app/)
@@ -51,7 +60,7 @@
 
 - React Hook Formによるフロントエンド側の入力チェックに加え、
   Zodを使用してバックエンド側でも入力値を検証
-- Expressのroutes / controllerを分離し、処理の責務を整理
+- Expressのroutes / controllersを分離し、処理の責務を整理
 - 複数条件をAND条件で組み合わせられる検索・フィルタ機能を実装
 - API通信中のLoading表示や通信エラー時の再読み込み機能を実装
 - 編集時にフォームまで自動スクロールするなど、操作性を改善
@@ -61,8 +70,13 @@
 
 ### Frontend
 
+frontend/backend の `.env` に
+MongoDBの接続情報やAPI URLなどの環境変数を設定する必要があります。
+`.env.example` をコピーして `.env`を作成してください。
+
 ```bash
 cd frontend
+cp .env.example .env
 npm install
 npm run dev
 ```
@@ -71,12 +85,10 @@ npm run dev
 
 ```bash
 cd backend
+cp .env.example .env
 npm install
 npm run dev
 ```
-
-`.env` にMongoDBの接続情報やAPI URLなどの環境変数を設定する必要があります。
-`.env.example` を参考に環境変数を設定してください。
 
 ## 今後の改善予定
 
